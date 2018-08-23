@@ -1,8 +1,15 @@
-**DriveShoot**
+# **DriveShoot**
 
 Antes de arrancar descargar:
-- Node.js 6.x.x
-- (Expo XDE)[https://github.com/expo/xde]
+- Node.js 6.x.x Antes recomiendo --> [NVM (Node Version Manager)](https://github.com/creationix/nvm)
+- [Expo XDE](https://github.com/expo/xde)
+
+Una vez descargadas estas cosas ejecutar 
+```
+npm install
+```
+Con esto listo se se puede enlazar la aplicación con Expo XDE y de ahi ejeutar la aplicación.
+
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
 
