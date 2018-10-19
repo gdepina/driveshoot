@@ -1,23 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Niupi Code Team</Text>
-        <Text>DriveShoot.</Text>
-        <Text>Hellow World</Text>
-      </View>
-    );
-  }
+import { Provider } from 'react-redux';
+
+import Router from './app/config/routes'
+import store from './app/redux/store';
+
+export default class App extends Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <Router />
+            </Provider>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
