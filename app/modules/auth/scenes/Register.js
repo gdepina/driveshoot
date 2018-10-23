@@ -13,7 +13,7 @@ import Form from "../components/Form"
 
 const fields = [
     {
-        key:'username',
+        key:'displayName',
         label: "Username",
         placeholder:"Username",
         autoFocus:false,

@@ -4,6 +4,8 @@ import {Scene, Router, ActionConst, Stack} from 'react-native-router-flux';
 import Splash from '../modules/splash/Splash';
 import Home from '../modules/main/scenes/Home';
 import MatchCreator from '../modules/main/scenes/MatchCreator';
+import Match from '../modules/main/scenes/Match';
+import MatchList from '../modules/main/scenes/MatchList';
 
 import Welcome from '../modules/auth/scenes/Welcome';
 import Register from '../modules/auth/scenes/Register';
@@ -27,7 +29,7 @@ export default class extends React.Component {
 
     checkToken() {
         firebase.auth().onAuthStateChanged((user) => {
-            if (user) this.setState({isReady: true, isLoggedIn: true})
+            if (user) this.setState({isReady: true, isLoggedIn: true, user: user})
             else this.setState({isReady: true, isLoggedIn: false})
         });
     }
@@ -48,7 +50,9 @@ export default class extends React.Component {
 
                     <Stack key="Main" initial={this.state.isLoggedIn}>
                         <Scene key="Home" component={Home} title="Goru" initial={true} type={ActionConst.REPLACE}/>
-                        <Scene key="MatchCreator" component={MatchCreator} title="Crea tu partido" />
+                        <Scene key="MatchCreator" component={MatchCreator} title="Crea tu partido" user={this.state.user} />
+                        <Scene key="MatchList" component={MatchList} title="Buscar tu partido" user={this.state.user} />
+                        <Scene key="Match" component={Match}  user={this.state.user} />
                     </Stack>
                 </Scene>
             </Router>

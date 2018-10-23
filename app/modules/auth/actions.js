@@ -25,22 +25,6 @@ export function login(data, successCB, errorCB) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function signInWithFacebook(facebookToken, successCB, errorCB) {
     return (dispatch) => {
         api.signInWithFacebook(facebookToken, function (success, data, error) {

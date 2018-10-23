@@ -51,6 +51,7 @@ class Home extends React.Component {
                     containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
                     buttonStyle={{}} //optional
                     textStyle={styles.buttonText}
+                    onPress={Actions.MatchList}
                     />
                 {/*<Button*/}
                     {/*raised*/}
