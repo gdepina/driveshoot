@@ -1,17 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import {Button} from 'react-native-elements'
+import {Button, Text} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
 
 import { padding, color, fontSize } from "../../../styles/Theme"
+import LottieView from "lottie-react-native";
+const ball = require('./simple_ball_bounce.json');
 
 export default class Welcome extends React.Component {
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.wrapper}>
-                    <Text style={styles.appTitle}>Goru</Text>
+                    <Text h1>Goru</Text>
+                    <View>
+                        <LottieView
+                            source={ball}
+                            style={styles.ball}
+                            loop
+                            autoPlay
+                        />
+                    </View>
                 </View>
                 <View style={styles.bottomContainer}>
                     <Button
@@ -25,7 +35,7 @@ export default class Welcome extends React.Component {
                         onPress={Actions.Login}/>
                     <Button
                         raised
-                        title={'CREATE ACCOUNT'}
+                        title={'CREAR CUENTA'}
                         borderRadius={4}
                         backgroundColor={color.main}
                         containerViewStyle={styles.buttonContainer}
@@ -47,9 +57,9 @@ const styles = StyleSheet.create({
     wrapper:{
         flex:1, justifyContent:"center", alignItems:"center"
     },
-
-    appTitle:{
-        fontSize:fontSize.large, fontWeight:"500"
+    ball: {
+        width: 400,
+        height: 180,
     },
 
     bottomContainer:{

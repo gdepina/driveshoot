@@ -19,7 +19,7 @@ const device_width = Dimensions.get('window').width;
 
 const { loadMatchs, loadMatch } = actions;
 
-class Match extends React.Component {
+class MatchList extends React.Component {
     constructor() {
         super();
         this.renderFooter = this.renderFooter.bind(this);
@@ -48,7 +48,7 @@ class Match extends React.Component {
     }
 
     renderHeader() {
-        return <SearchBar noIcon round lightTheme onChangeText={null} onClearText={null} placeholder='Type Here...' />;
+        return <SearchBar noIcon round lightTheme onChangeText={null} onClearText={null} placeholder='Partido de pepo...' />;
     }
 
     renderFooter() {
@@ -77,10 +77,10 @@ class Match extends React.Component {
 
         return (
             <AppFontLoader>
-                <View style={styles.container} >
+                <View >
                     <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                         <FlatList
-                            data={Object.values(this.props.matches)}
+                            data={this.props.matches ? Object.values(this.props.matches) : null}
                             ItemSeparatorComponent={this.renderSeparator}
                             ListHeaderComponent={this.renderHeader}
                             ListFooterComponent={this.renderFooter}
@@ -111,7 +111,7 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, { loadMatchs, loadMatch })(Match);
+export default connect(mapStateToProps, { loadMatchs, loadMatch })(MatchList);
 
 
 const styles = StyleSheet.create({

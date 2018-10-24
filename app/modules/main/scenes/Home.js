@@ -53,15 +53,16 @@ class Home extends React.Component {
                     textStyle={styles.buttonText}
                     onPress={Actions.MatchList}
                     />
-                {/*<Button*/}
-                    {/*raised*/}
-                    {/*title={'LOG OUT'}*/}
-                    {/*borderRadius={4}*/}
-                    {/*backgroundColor={color.main}*/}
-                    {/*containerViewStyle={styles.buttonContainer}*/}
-                    {/*buttonStyle={{}} //optional*/}
-                    {/*textStyle={styles.buttonText}*/}
-                    {/*onPress={this.onSignOut.bind(this)}/>*/}
+                <Button
+                    large
+                    raised
+                    title={'Cerrar sesion'}
+                    borderRadius={4}
+                    backgroundColor={color.main}
+                    containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
+                    buttonStyle={{}} //optional
+                    textStyle={styles.buttonText}
+                    onPress={this.onSignOut.bind(this)}/>
             </View>
         );
     }
