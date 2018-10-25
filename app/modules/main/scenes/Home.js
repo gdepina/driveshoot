@@ -45,7 +45,7 @@ class Home extends React.Component {
                     <Button
                         large
                         raised
-                        title={'+ partido'}
+                        title={'Crear partido'}
                         borderRadius={4}
                         backgroundColor={color.main}
                         containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
