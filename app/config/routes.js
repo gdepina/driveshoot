@@ -42,14 +42,14 @@ export default class extends React.Component {
             <Router>
                 <Scene key="root" hideNavBar>
                     <Stack key="Auth" initial={!this.state.isLoggedIn}>
-                        <Scene key="Welcome" component={Welcome} title="Respira el futbol" initial={true}/>
+                        <Scene key="Welcome" component={Welcome} title="Respira el futbol" initial={true} hideNavBar/>
                         <Scene key="Register" component={Register} title="Register"/>
                         <Scene key="Login" component={Login} title="Login"/>
                     </Stack>
 
 
                     <Stack key="Main" initial={this.state.isLoggedIn}>
-                        <Scene key="Home" component={Home} title="Goru" initial={true} type={ActionConst.REPLACE}/>
+                        <Scene key="Home" component={Home} title="Goru" initial={true} type={ActionConst.REPLACE} hideNavBar/>
                         <Scene key="MatchCreator" component={MatchCreator} title="Crea tu partido" user={this.state.user} />
                         <Scene key="MatchList" component={MatchList} title="Buscar tu partido" user={this.state.user} />
                         <Scene key="Match" component={Match}  user={this.state.user} />

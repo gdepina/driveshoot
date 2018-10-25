@@ -116,6 +116,11 @@ class MatchCreator extends React.Component {
                 this.state.end_location,
                 this.state.datetime,
                 this.state.locationName,
+                [{
+                    id:  this.props.user.uid,
+                    owner: true,
+                    email: this.props.user.email,
+                }]
             )
         });
     }

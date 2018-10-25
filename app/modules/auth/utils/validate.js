@@ -29,10 +29,10 @@ export function validate(form) {
             }else{
                 error[field] = '';
 
-                if (type === "email" && !validateEmail(value)){
-                    error[field] = 'Enter a valid email address';
-                    success = false;
-                }
+                // if (type === "email"){
+                //     error[field] = 'Enter a valid email address';
+                //     success = false;
+                // }
             }
         }
     });

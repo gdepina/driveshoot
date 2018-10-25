@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 
 import {Button, Text} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux'
@@ -11,39 +11,51 @@ const ball = require('./simple_ball_bounce.json');
 export default class Welcome extends React.Component {
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.wrapper}>
-                    <Text h1>Goru</Text>
-                    <View>
-                        <LottieView
-                            source={ball}
-                            style={styles.ball}
-                            loop
-                            autoPlay
-                        />
+            <ImageBackground
+                style={{
+                    backgroundColor: '#ccc',
+                    flex: 1,
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                }}
+                source={require('./cancha.jpg')}
+            >
+                <View style={styles.container}>
+                    <View style={styles.wrapper}>
+                        <Text h1 style={{ color: '#fff' }}>Goru</Text>
+                        <View>
+                            <LottieView
+                                source={ball}
+                                style={styles.ball}
+                                loop
+                                autoPlay
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.bottomContainer}>
+                        <Button
+                            raised
+                            title={'LOG IN'}
+                            borderRadius={4}
+                            backgroundColor={color.main}
+                            containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
+                            buttonStyle={{}} //optional
+                            textStyle={styles.buttonText}
+                            onPress={Actions.Login}/>
+                        <Button
+                            raised
+                            title={'CREAR CUENTA'}
+                            borderRadius={4}
+                            backgroundColor={color.main}
+                            containerViewStyle={styles.buttonContainer}
+                            buttonStyle={{}} //optional
+                            textStyle={styles.buttonText}
+                            onPress={Actions.Register}/>
                     </View>
                 </View>
-                <View style={styles.bottomContainer}>
-                    <Button
-                        raised
-                        title={'LOG IN'}
-                        borderRadius={4}
-                        backgroundColor={color.main}
-                        containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
-                        buttonStyle={{}} //optional
-                        textStyle={styles.buttonText}
-                        onPress={Actions.Login}/>
-                    <Button
-                        raised
-                        title={'CREAR CUENTA'}
-                        borderRadius={4}
-                        backgroundColor={color.main}
-                        containerViewStyle={styles.buttonContainer}
-                        buttonStyle={{}} //optional
-                        textStyle={styles.buttonText}
-                        onPress={Actions.Register}/>
-                </View>
-            </View>
+            </ImageBackground>
         );
     }
 }
@@ -51,7 +63,6 @@ export default class Welcome extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
     },
 
     wrapper:{

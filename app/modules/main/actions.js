@@ -1,7 +1,7 @@
 import actionType from './actionTypes';
 import * as api from './api';
 
-export function loadMatchs() {
+export function loadMatchs(key) {
     return dispatch => {
         dispatch({
             type: actionType.LOAD_MATCHES_REQUEST
@@ -11,6 +11,10 @@ export function loadMatchs() {
                 dispatch({
                     type: actionType.LOAD_MATCHES_SUCCESS,
                     payload: match.val()
+                })
+                key && dispatch({
+                    type: actionType.ADD_MATCH_SUCCESS,
+                    payload: key,
                 })
             })
             .catch(error => {
@@ -44,19 +48,15 @@ export function loadMatch(key) {
 }
 
 
-export function createMatch(name, orgId, matchSize, courtType, location, datetime, locationName) {
+export function createMatch(name, orgId, matchSize, courtType, location, datetime, locationName, players) {
     return dispatch => {
         dispatch({
             type: actionType.ADD_MATCH_REQUEST
         })
-       const result = api.addMatch(name, orgId, matchSize, courtType, location, datetime, locationName)
+       const result = api.addMatch(name, orgId, matchSize, courtType, location, datetime, locationName, players)
         result.prom
-            .then(key => {
-                loadMatchs()(dispatch) //refresh the data to keep up-to-date
-                dispatch({
-                    type: actionType.ADD_MATCH_SUCCESS,
-                    payload: result.key,
-                })
+            .then(() => {
+                loadMatchs(result.key)(dispatch) //refresh the data to keep up-to-date
             })
             .catch(error => {
                 dispatch({

@@ -16,9 +16,9 @@ export function getMatchDB(matchId) {
 
 
 // add new section
-export function addMatch(name, orgId, matchSize, courtType, location, datetime, locationName) {
+export function addMatch(name, orgId, matchSize, courtType, location, datetime, locationName, players) {
     let key = database.ref('/match').push().key
-    let model = matchModel(key, name, firebase.database.ServerValue.TIMESTAMP, orgId, matchSize, courtType, location, datetime, locationName)
+    let model = matchModel(key, name, firebase.database.ServerValue.TIMESTAMP, orgId, matchSize, courtType, location, datetime, locationName, players)
     return { prom: database.ref('/match/'+ key).set(model), key}
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-var { View, StyleSheet, Alert } = require('react-native');
+const { View, StyleSheet, Alert, ImageBackground } = require('react-native');
 
 import {Button} from 'react-native-elements'
 import {Actions} from 'react-native-router-flux';
@@ -30,40 +30,52 @@ class Home extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Button
-                    large
-                    raised
-                    title={'+ partido'}
-                    borderRadius={4}
-                    backgroundColor={color.main}
-                    containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
-                    buttonStyle={{}} //optional
-                    textStyle={styles.buttonText}
-                    onPress={Actions.MatchCreator}
-                    />
-                <Button
-                    large
-                    raised
-                    title={'Ver partidos'}
-                    borderRadius={4}
-                    backgroundColor={color.main}
-                    containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
-                    buttonStyle={{}} //optional
-                    textStyle={styles.buttonText}
-                    onPress={Actions.MatchList}
-                    />
-                <Button
-                    large
-                    raised
-                    title={'Cerrar sesion'}
-                    borderRadius={4}
-                    backgroundColor={color.main}
-                    containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
-                    buttonStyle={{}} //optional
-                    textStyle={styles.buttonText}
-                    onPress={this.onSignOut.bind(this)}/>
-            </View>
+            <ImageBackground
+                style={{
+                    backgroundColor: '#ccc',
+                    flex: 1,
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                }}
+                source={require('./textura3.jpg')}
+            >
+                <View style={styles.container}>
+                    <Button
+                        large
+                        raised
+                        title={'+ partido'}
+                        borderRadius={4}
+                        backgroundColor={color.main}
+                        containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
+                        buttonStyle={{}} //optional
+                        textStyle={styles.buttonText}
+                        onPress={Actions.MatchCreator}
+                        />
+                    <Button
+                        large
+                        raised
+                        title={'Ver partidos'}
+                        borderRadius={4}
+                        backgroundColor={color.main}
+                        containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
+                        buttonStyle={{}} //optional
+                        textStyle={styles.buttonText}
+                        onPress={Actions.MatchList}
+                        />
+                    <Button
+                        large
+                        raised
+                        title={'Cerrar sesion'}
+                        borderRadius={4}
+                        backgroundColor={color.main}
+                        containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
+                        buttonStyle={{}} //optional
+                        textStyle={styles.buttonText}
+                        onPress={this.onSignOut.bind(this)}/>
+                </View>
+            </ImageBackground>
         );
     }
 }
@@ -80,7 +92,6 @@ export default connect(mapStateToProps, { signOut })(Home);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         justifyContent: "center",
         alignItems: "center"
     },

@@ -1,7 +1,7 @@
-export default (id, name, timestamp, organizatorId, matchSize, courtType, location, datetime, locationName) => ({
+export default (id, name, timestamp, organizatorId, matchSize, courtType, location, datetime, locationName, players = []) => ({
     id: id,
     name: name,
-    players: [],
+    players: players,
     timestamp: timestamp,
     organizatorId: organizatorId,
     matchSize: matchSize,

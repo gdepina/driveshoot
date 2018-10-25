@@ -1,6 +1,6 @@
 import React from 'react';
 
-var {View, StyleSheet, Dimensions, FlatList} = require('react-native');
+var {View, StyleSheet, Dimensions, FlatList, ScrollView} = require('react-native');
 
 import {connect} from 'react-redux';
 
@@ -9,10 +9,11 @@ import {actions} from "../"
 import * as Theme from "../../../styles/Theme";
 
 const {padding} = Theme;
-import { List, ListItem, Text, FormLabel, Card} from 'react-native-elements'
+import {List, ListItem, Text, FormLabel, Card, Button, Icon} from 'react-native-elements'
 
 
 const device_width = Dimensions.get('window').width;
+import { AppFontLoader } from '../../AppFontLoader';
 
 const {loadMatch} = actions;
 
@@ -23,7 +24,7 @@ class Match extends React.Component {
     }
 
     componentDidMount() {
-        this.props.loadMatch(this.props.id);
+        this.props.id && this.props.loadMatch(this.props.id);
     }
 
     renderSeparator() {
@@ -31,32 +32,52 @@ class Match extends React.Component {
             <View
                 style={{
                     height: 1,
-                    width: "86%",
+                    width: "90%",
                     backgroundColor: "#CED0CE",
-                    marginLeft: "14%"
+                    marginLeft: "6%"
                 }}
             />
         );
+    }
+    renderCardHeader() {
+        return (
+            <View style={{ flexDirection: "row", justifyContent: "center", marginTop:20, marginBottom: 20 }}>
+                <Button
+                    title={"Unirme"}
+                    borderRadius={4}  //optional
+                    backgroundColor={"#397af8"} //optional
+                    // containerViewStyle={styles.buttonContainer} //optional
+                />
+                <Button
+                    title={"Bajarme"}
+                    borderRadius={4}  //optional
+                    backgroundColor={"#397af8"} //optional
+                    // containerViewStyle={styles.buttonContainer} //optional
+                />
+            </View>)
     }
 
     renderPlayers() {
         return (<Card title="Jugadores">
             {
-                <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
-                    <FlatList
-                        data={this.props.currentMatch && this.props.currentMatch.players !== undefined  ? this.props.currentMatch.players : []}
-                        ItemSeparatorComponent={this.renderSeparator}
-                        renderItem={({player}) => (
-                            <ListItem
-                                key={player.id}
-                                roundAvatar
-                                title={player.name}
-                                containerStyle={{borderBottomWidth: 0}}
-                            />
-                        )}
-                        keyExtractor={item => item.id}
-                    />
-                </List>
+                <AppFontLoader>
+                    <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0}}>
+                        <FlatList
+                            data={this.props.currentMatch && this.props.currentMatch.players !== undefined  ? this.props.currentMatch.players : []}
+                            renderItem={(player) => (
+                                <ListItem
+                                    key={player.item.id}
+                                    hideChevron
+                                    avatar={"https://ui-avatars.com/api/?background=0D8ABC&color=fff&name="+player.item.email.substring(0, 2).toUpperCase()}
+                                    roundAvatar
+                                    title={player.item.name || player.item.email}
+                                    containerStyle={{borderBottomWidth: 0}}
+                                />
+                            )}
+                            keyExtractor={item => item.id}
+                        />
+                    </List>
+                </AppFontLoader>
             }
         </Card>)
     }
@@ -84,10 +105,11 @@ class Match extends React.Component {
     render() {
 
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 {this.renderMatch()}
                 {this.renderPlayers()}
-            </View>
+                {this.renderCardHeader()}
+            </ScrollView>
         )
     }
 }
