@@ -311,8 +311,14 @@ class MatchCreator extends React.Component {
     }
 }
 
+function mapStateToProps(state, props) {
+    return {
+        user: state.authReducer.user,
+    }
+}
 
-export default connect(null, { createMatch })(MatchCreator);
+
+export default connect(mapStateToProps, { createMatch })(MatchCreator);
 
 
 const styles = StyleSheet.create({
