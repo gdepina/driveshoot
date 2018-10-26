@@ -32,6 +32,7 @@
     "react-native-google-places-autocomplete": "^1.3.9",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-number-stepper": "0.0.2",
+    "react-native-phone-input": "^0.2.1",
     "react-native-picker-select": "^5.0.0",
     "react-native-redux-listener": "^0.3.0",
     "react-native-router-flux": "^4.0.0-beta.24",

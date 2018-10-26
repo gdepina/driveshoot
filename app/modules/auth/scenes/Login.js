@@ -14,16 +14,16 @@ import Form from "../components/Form"
 const fields = [
     {
         key:'email',
-        label: "Email Address",
-        placeholder:"Email",
+        label: "EMAIL",
+        placeholder:"goru@futbol.com",
         autoFocus:false,
         secureTextEntry:false,
         type: "email"
     },
     {
         key:'password',
-        label: "Password",
-        placeholder:"Password",
+        label: "CONTRASEÑA",
+        placeholder:"Contraseña",
         autoFocus:false,
         secureTextEntry:true,
         type: "password"

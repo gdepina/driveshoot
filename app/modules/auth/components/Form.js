@@ -83,7 +83,7 @@ export default class Form extends React.Component {
 
                 <Button
                     raised
-                    title={'CONTINUE'}
+                    title={'CONTINUAR'}
                     borderRadius={4}  //optional
                     backgroundColor={"#397af8"} //optional
                     containerViewStyle={styles.buttonContainer} //optional

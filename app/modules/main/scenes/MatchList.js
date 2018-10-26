@@ -39,9 +39,8 @@ class MatchList extends React.Component {
             <View
                 style={{
                     height: 1,
-                    width: "86%",
+                    width: "100%",
                     backgroundColor: "#CED0CE",
-                    marginLeft: "14%"
                 }}
             />
         );
@@ -77,7 +76,7 @@ class MatchList extends React.Component {
 
         return (
             <AppFontLoader>
-                <View >
+                <View style={styles.container}>
                     <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                         <FlatList
                             data={this.props.matches ? Object.values(this.props.matches) : null}
@@ -118,39 +117,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: 10,
-    },
-    container_step_1: {
-        flex: 1,
-        marginLeft: 20,
-    },
-    container_congrats: {
-        width: 400,
-        height: 180,
-        marginLeft: 45
-    },
-    buttonText: {
-        fontWeight: "500"
-    },
-    search_field_container: {
-        height: 150,
-        width: device_width,
-        position: 'absolute',
-    },
-    calloutSearch: {
-        borderColor: "transparent",
-        marginLeft: 10,
-        width: "90%",
-        marginRight: 10,
-        height: 40,
-        borderWidth: 0.0
-    },
-    buttonContainer: {
-        marginVertical: padding * 2,
-        marginHorizontal: 0
-    },
-    row: {
-        marginBottom: 15,
+        marginTop: -20,
     }
 });
 

@@ -23,6 +23,12 @@ export function login(data, successCB, errorCB) {
     };
 }
 
+export function storeUser(data) {
+    return (dispatch) => {
+        dispatch({type: t.LOGIN_SUCCESS, user: data});
+    };
+}
+
 
 
 export function signInWithFacebook(facebookToken, successCB, errorCB) {

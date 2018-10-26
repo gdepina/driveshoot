@@ -37,7 +37,7 @@ export default class Welcome extends React.Component {
                     <View style={styles.bottomContainer}>
                         <Button
                             raised
-                            title={'LOG IN'}
+                            title={'INGRESA'}
                             borderRadius={4}
                             backgroundColor={color.main}
                             containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}

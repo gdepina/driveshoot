@@ -1,6 +1,6 @@
 import React from 'react';
 
-var {View, StyleSheet, Dimensions, Share} = require('react-native');
+var {View, StyleSheet, Dimensions, Share } = require('react-native');
 
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Geocoder from 'react-native-geocoding';
@@ -9,11 +9,12 @@ import {MapView} from "expo";
 
 import StepIndicator from 'react-native-step-indicator';
 import { RNNumberStepper } from 'react-native-number-stepper';
-import { FormLabel, Button, Text } from 'react-native-elements'
+import { FormLabel, Button, Text, FormInput } from 'react-native-elements'
 import DatePicker from 'react-native-datepicker'
 import RNPickerSelect from 'react-native-picker-select';
 import LottieView from 'lottie-react-native';
 import {Actions} from 'react-native-router-flux';
+import PhoneInput from 'react-native-phone-input'
 
 
 import { actions } from "../"
@@ -33,7 +34,7 @@ class MatchCreator extends React.Component {
         this.state = {
             currentPosition: 0,
             end_location: null,
-            matchSize: 5,
+            matchSize: 10,
             region: {
                 latitude: -34.6157437,
                 longitude: -58.5733832,
@@ -98,9 +99,9 @@ class MatchCreator extends React.Component {
 
 
     onPressIndicator(position) {
-        this.setState({
-            currentPosition: position,
-        });
+        // this.setState({
+        //     currentPosition: position,
+        // });
     }
 
     onSubmit() {
@@ -109,7 +110,7 @@ class MatchCreator extends React.Component {
             currentPosition: 2,
         }, () => {
             this.animation.play();
-            this.props.createMatch(this.props.user && `Partido de ${this.props.user.email}`,
+            this.props.createMatch(this.props.user && `Partido de ${this.props.user.displayName || this.props.user.email}`,
                 this.props.user.uid,
                 this.state.matchSize,
                 this.state.courtType,
@@ -120,7 +121,9 @@ class MatchCreator extends React.Component {
                     id:  this.props.user.uid,
                     owner: true,
                     email: this.props.user.email,
-                }]
+                    displayName: this.props.user.displayName,
+                }],
+                this.state.phoneNumber,
             )
         });
     }
@@ -133,33 +136,35 @@ class MatchCreator extends React.Component {
             currentStepIndicatorSize: 30,
             separatorStrokeWidth: 2,
             currentStepStrokeWidth: 3,
-            stepStrokeCurrentColor: '#fe7013',
+            stepStrokeCurrentColor: '#397af8',
             stepStrokeWidth: 3,
-            stepStrokeFinishedColor: '#fe7013',
+            stepStrokeFinishedColor: '#397af8',
             stepStrokeUnFinishedColor: '#aaaaaa',
-            separatorFinishedColor: '#fe7013',
+            separatorFinishedColor: '#397af8',
             separatorUnFinishedColor: '#aaaaaa',
-            stepIndicatorFinishedColor: '#fe7013',
+            stepIndicatorFinishedColor: '#397af8',
             stepIndicatorUnFinishedColor: '#ffffff',
             stepIndicatorCurrentColor: '#ffffff',
             stepIndicatorLabelFontSize: 13,
             currentStepIndicatorLabelFontSize: 13,
-            stepIndicatorLabelCurrentColor: '#fe7013',
+            stepIndicatorLabelCurrentColor: '#397af8',
             stepIndicatorLabelFinishedColor: '#ffffff',
             stepIndicatorLabelUnFinishedColor: '#aaaaaa',
             labelColor: '#999999',
             labelSize: 13,
-            currentStepLabelColor: '#fe7013',
+            currentStepLabelColor: '#397af8',
         }
         return (
             <View style={styles.container}>
-                <StepIndicator
-                    customStyles={customStyles}
-                    currentPosition={this.state.currentPosition}
-                    labels={labels}
-                    stepCount={3}
-                    onPress={this.onPressIndicator}
-                />
+                <View style={{ marginVertical: 10}}>
+                    <StepIndicator
+                        customStyles={customStyles}
+                        currentPosition={this.state.currentPosition}
+                        labels={labels}
+                        stepCount={3}
+                        onPress={this.onPressIndicator}
+                    />
+                </View>
                 {
                     this.state.currentPosition === 0 &&
                     <View style={styles.container}>
@@ -212,12 +217,21 @@ class MatchCreator extends React.Component {
                     <View style={styles.container}>
                         <View style={styles.container_step_1}>
                             <View style={styles.row}>
-                                <FormLabel>{"Cantidad de jugadores"}</FormLabel>
-                                <RNNumberStepper maxValue={20} value={this.state.matchSize} size={2}
+                                <FormLabel labelStyle={styles.labelStyle} containerStyle={styles.formLabelContainer}>{"TEL. CONTACTO"}</FormLabel>
+                                <PhoneInput initialCountry={"ar"}
+                                            cancelText={"Cancelar"}
+                                            confirmText={"Confirmar"}
+                                            style={styles.phoneInput}
+                                            textComponent={FormInput}
+                                            onChangePhoneNumber={(phoneNumber) => this.setState({phoneNumber})}/>
+                            </View>
+                            <View style={styles.row}>
+                                <FormLabel labelStyle={styles.labelStyle} containerStyle={styles.formLabelContainer}>{"CANTIDAD JUGADORES"}</FormLabel>
+                                <RNNumberStepper maxValue={20} value={this.state.matchSize} size={2} stepValue={2}
                                 onChange={(newValue) => this.setState({matchSize: newValue})}/>
                             </View>
                             <View style={styles.row}>
-                                <FormLabel>{"¿Cuando y a que hora?"}</FormLabel>
+                                <FormLabel labelStyle={styles.labelStyle} containerStyle={styles.formLabelContainer}>{"¿CUANDO Y A QUE HORA?"}</FormLabel>
                                 <DatePicker
                                     style={{width: 200}}
                                     date={this.state.datetime}
@@ -230,8 +244,11 @@ class MatchCreator extends React.Component {
                                 />
                             </View>
                             <View style={styles.row}>
-                                <FormLabel>{"Tipo de cancha"}</FormLabel>
+                                <FormLabel labelStyle={styles.labelStyle} containerStyle={styles.formLabelContainer}>{"TIPO CANCHA"}</FormLabel>
                                 <RNPickerSelect
+                                    style={{ inputAndroid: styles.picker, underline: {
+                                            borderTopWidth: 0}
+                                    }}
                                     placeholder={{
                                         label: 'Elige un tipo...',
                                         value: null,
@@ -242,20 +259,12 @@ class MatchCreator extends React.Component {
                                             courtType: value,
                                         });
                                     }}
-                                    onUpArrow={() => {
-                                        // this.inputRefs.name.focus();
-                                    }}
-                                    onDownArrow={() => {
-                                        // this.inputRefs.picker2.togglePicker();
-                                    }}
                                     value={this.state.courtType}
-                                    ref={(el) => {
-                                        // this.inputRefs.picker = el;
-                                    }}
                                 />
                             </View>
                         </View>
                         <Button
+                            disabled={this.state.courtType === undefined ||  this.state.phoneNumber === undefined || this.state.datetime === undefined }
                             raised
                             title={'Confirmar'}
                             borderRadius={4}  //optional
@@ -310,7 +319,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: 10,
     },
     container_step_1: {
         flex: 1,
@@ -342,7 +350,31 @@ const styles = StyleSheet.create({
         marginHorizontal: 0
     },
     row: {
-        marginBottom: 15,
+        marginVertical: padding - 2,
+        marginHorizontal: 0
+    },
+    formLabel: {
+        fontWeight: "400",
+    },
+    formLabelContainer: {
+        position: "relative",
+        left: -(Dimensions.get('window').width * 0.05),
+        marginBottom: 3,
+    },
+    phoneInput: {
+        height: 30,
+        marginTop: 8,
+        marginBottom: 8,
+        width: "90%",
+        backgroundColor: '#FFF',
+        color: '#7E7E84',
+        borderBottomColor: '#7E7E84',
+        borderBottomWidth: 1
+    },
+    picker: {
+        width: "90%",
+        position: "relative",
+        left: -(Dimensions.get('window').width * 0.01),
     }
 });
 

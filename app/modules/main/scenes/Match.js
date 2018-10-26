@@ -4,6 +4,8 @@ var {View, StyleSheet, Dimensions, FlatList, ScrollView} = require('react-native
 
 import {connect} from 'react-redux';
 
+import { Actions } from 'react-native-router-flux';
+
 
 import {actions} from "../"
 import * as Theme from "../../../styles/Theme";
@@ -15,46 +17,65 @@ import {List, ListItem, Text, FormLabel, Card, Button, Icon} from 'react-native-
 const device_width = Dimensions.get('window').width;
 import { AppFontLoader } from '../../AppFontLoader';
 
-const {loadMatch} = actions;
+const {loadMatch, addPlayerToMatch, removePlayerFromMatch, destroyMatch} = actions;
 
 class Match extends React.Component {
     constructor() {
         super();
         this.renderPlayers = this.renderPlayers.bind(this);
+        this.addPlayer = this.addPlayer.bind(this);
+        this.checkIamIn = this.checkIamIn.bind(this);
+        this.removePlayer = this.removePlayer.bind(this);
+        this.iamOwner = this.iamOwner.bind(this);
     }
 
     componentDidMount() {
         this.props.id && this.props.loadMatch(this.props.id);
     }
 
-    renderSeparator() {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "90%",
-                    backgroundColor: "#CED0CE",
-                    marginLeft: "6%"
-                }}
-            />
-        );
+    addPlayer() {
+        this.props.addPlayerToMatch(this.props.currentMatch.id, this.props.user.uid, this.props.user.email, this.props.user.displayName);
     }
+
+    removePlayer() {
+        if (!this.iamOwner()) {
+            this.props.removePlayerFromMatch(this.props.currentMatch.id, this.props.user.uid);
+        } else {
+            this.props.destroyMatch(this.props.currentMatch.id);
+            Actions.Home();
+        }
+    }
+
+    iamOwner() {
+         return this.props.currentMatch && this.props.currentMatch.players.some(player => player.id === this.props.user.uid && player.owner)
+    }
+
+    checkIamIn() {
+        return this.props.currentMatch && !this.props.currentMatch.players.some(player => player.id === this.props.user.uid)
+    }
+
     renderCardHeader() {
+        const iamIn = this.checkIamIn();
         return (
             <View style={{ flexDirection: "row", justifyContent: "center", marginTop:20, marginBottom: 20 }}>
-                <Button
+                {iamIn && <Button
                     title={"Unirme"}
                     borderRadius={4}  //optional
                     backgroundColor={"#397af8"} //optional
-                    // containerViewStyle={styles.buttonContainer} //optional
-                />
-                <Button
-                    title={"Bajarme"}
+                    onPress={this.addPlayer}
+                />}
+                {!iamIn && <Button
+                    title={this.iamOwner() ? "Cerrar Partido" : "Bajarme"}
                     borderRadius={4}  //optional
                     backgroundColor={"#397af8"} //optional
-                    // containerViewStyle={styles.buttonContainer} //optional
-                />
+                    onPress={this.removePlayer}
+                />}
             </View>)
+    }
+
+    getFirstCharacters(player) {
+        const displayName = player.displayName || player.email;
+        return displayName.substring(0, 2).toUpperCase();
     }
 
     renderPlayers() {
@@ -68,9 +89,9 @@ class Match extends React.Component {
                                 <ListItem
                                     key={player.item.id}
                                     hideChevron
-                                    avatar={"https://ui-avatars.com/api/?background=0D8ABC&color=fff&name="+player.item.email.substring(0, 2).toUpperCase()}
+                                    avatar={"https://ui-avatars.com/api/?background=0D8ABC&color=fff&name="+this.getFirstCharacters(player.item)}
                                     roundAvatar
-                                    title={player.item.name || player.item.email}
+                                    title={player.item.displayName || player.item.email}
                                     containerStyle={{borderBottomWidth: 0}}
                                 />
                             )}
@@ -84,18 +105,21 @@ class Match extends React.Component {
 
     renderMatch() {
         const match = this.props.currentMatch ? this.props.currentMatch : this.props.matches[this.props.id]
-        const {name, matchSize, locationName, datetime, courtType} = match;
+        const {name, matchSize, locationName, datetime, courtType, phoneNumber} = match;
         return (<Card title={name}>
             {
                 <View>
                     <FormLabel>{"Partido"}</FormLabel>
                     <Text style={styles.matchItem} h5>{matchSize/2 + 'vs' + matchSize/2}</Text>
                     <FormLabel>{"Lugar"}</FormLabel>
-                    <Text style={styles.matchItem}  h5>{locationName}</Text>
+                    <Text style={styles.matchItem} selectable h5>{locationName}</Text>
                     <FormLabel>{"Cuando"}</FormLabel>
                     <Text style={styles.matchItem}  h5>{datetime}</Text>
                     <FormLabel>{"Cancha"}</FormLabel>
                     <Text style={styles.matchItem}  h5>{courtType}</Text>
+                    { phoneNumber && <FormLabel>{"Tel. Contacto"}</FormLabel> }
+                    { phoneNumber && <Text selectable style={styles.matchItem}  h5>{phoneNumber}</Text> }
+
                 </View>
             }
         </Card>)
@@ -122,7 +146,7 @@ function mapStateToProps(state, props) {
     }
 }
 
-export default connect(mapStateToProps, {loadMatch})(Match);
+export default connect(mapStateToProps, {loadMatch, addPlayerToMatch, removePlayerFromMatch, destroyMatch})(Match);
 
 
 const styles = StyleSheet.create({

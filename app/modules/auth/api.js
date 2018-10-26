@@ -10,9 +10,18 @@ const imageSize = 120;
 
 //Create the new user using email and password
 export function createUserWithEmailAndPassword (data, callback) {
-    var { email, password } = data;
+    var { email, password, displayName } = data;
     auth.createUserWithEmailAndPassword(email, password)
-        .then((user) => callback(true, user, null))
+        .then((user) => {
+            user.updateProfile({
+                displayName
+            }).then(() => {
+                // Update successful.
+            }, (error) => {
+                // An error happened.
+            });
+            return callback(true, user, null)
+        })
         .catch((error) => callback(false, null, error));
 }
 

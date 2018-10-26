@@ -14,8 +14,8 @@ import Form from "../components/Form"
 const fields = [
     {
         key:'displayName',
-        label: "Username",
-        placeholder:"Username",
+        label: "NICKNAME",
+        placeholder:"usuario",
         autoFocus:false,
         secureTextEntry:false,
         value: "",
@@ -23,8 +23,8 @@ const fields = [
     },
     {
         key:'email',
-        label: "Email Address",
-        placeholder:"Email",
+        label: "EMAIL",
+        placeholder:"goru@futbol.com",
         autoFocus:false,
         secureTextEntry:false,
         value: "",
@@ -32,8 +32,8 @@ const fields = [
     },
     {
         key:'password',
-        label: "Password",
-        placeholder:"Password",
+        label: "CONTRASEÑA",
+        placeholder:"Min 6 caracteres",
         autoFocus:false,
         secureTextEntry:true,
         value: "",

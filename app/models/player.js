@@ -1,7 +1,7 @@
-export default (id, name, timestamp) => {
+export default (id, email, displayName) => {
     return {
         id: id,
-        name: name,
-        timestamp: timestamp
+        email: email,
+        displayName: displayName,
     }
 }
