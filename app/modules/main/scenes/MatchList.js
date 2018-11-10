@@ -22,7 +22,10 @@ const { loadMatchs, loadMatch } = actions;
 class MatchList extends React.Component {
     constructor() {
         super();
+        this.getMatches = this.getMatches.bind(this);
+        this.filterByValue = this.filterByValue.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
+
         this.state = {
             loading: false,
             data: null,
@@ -33,6 +36,20 @@ class MatchList extends React.Component {
     componentDidMount() {
         this.props.loadMatchs();
     }
+
+    componentWillReceiveProps(nextProps) {
+        const { matches, user, myMatchs } = nextProps;
+
+        this.setState({
+            matches: myMatchs ? Object.values(this.props.matches).filter(o => o.organizatorId === user.uid) : matches,
+        })
+    }
+
+    getMatches() {
+        const { matches, user, myMatchs } = this.props;
+        return myMatchs ? Object.values(this.props.matches).filter(o => o.organizatorId === user.uid) : matches
+    }
+
 
     renderSeparator() {
         return (
@@ -46,8 +63,23 @@ class MatchList extends React.Component {
         );
     }
 
+    filterByValue(text) {
+        const matches = this.getMatches();
+        const matchesFiltered = Object.values(matches).filter(o => {
+            return Object.keys(o).some(k => {
+                return typeof o[k] === 'string' && o[k].toLowerCase().includes(text.toLowerCase())
+            })
+        });
+
+        this.setState({
+            matches: matchesFiltered,
+            value: text,
+        })
+    }
+
+
     renderHeader() {
-        return <SearchBar noIcon round lightTheme onChangeText={null} onClearText={null} placeholder='Partido de pepo...' />;
+        return <SearchBar noIcon round lightTheme onChangeText={this.filterByValue} value={this.state.value} onClearText={null} placeholder='Partido de pepo...' />;
     }
 
     renderFooter() {
@@ -74,14 +106,15 @@ class MatchList extends React.Component {
 
     render() {
 
+        const matches = this.state.matches || this.props.matches;
         return (
             <AppFontLoader>
                 <View style={styles.container}>
+                    { this.renderHeader() }
                     <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                         <FlatList
-                            data={this.props.matches ? Object.values(this.props.matches) : null}
+                            data={matches ? Object.values(matches) : null}
                             ItemSeparatorComponent={this.renderSeparator}
-                            ListHeaderComponent={this.renderHeader}
                             ListFooterComponent={this.renderFooter}
                             renderItem={({ item }) => (
                                 <ListItem
@@ -117,7 +150,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: -20,
     }
 });
 

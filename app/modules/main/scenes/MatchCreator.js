@@ -227,7 +227,7 @@ class MatchCreator extends React.Component {
                             </View>
                             <View style={styles.row}>
                                 <FormLabel labelStyle={styles.labelStyle} containerStyle={styles.formLabelContainer}>{"CANTIDAD JUGADORES"}</FormLabel>
-                                <RNNumberStepper maxValue={20} value={this.state.matchSize} size={2} stepValue={2}
+                                <RNNumberStepper maxValue={22} minValue={10} value={this.state.matchSize} size={2} stepValue={2}
                                 onChange={(newValue) => this.setState({matchSize: newValue})}/>
                             </View>
                             <View style={styles.row}>

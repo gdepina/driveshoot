@@ -45,6 +45,17 @@ class Home extends React.Component {
                     <Button
                         large
                         raised
+                        title={'Mis partidos'}
+                        borderRadius={4}
+                        backgroundColor={color.main}
+                        containerViewStyle={[styles.buttonContainer, {marginVertical:4}]}
+                        buttonStyle={{}} //optional
+                        textStyle={styles.buttonText}
+                        onPress={() => Actions.MatchList({ myMatchs: true })}
+                    />
+                    <Button
+                        large
+                        raised
                         title={'Crear partido'}
                         borderRadius={4}
                         backgroundColor={color.main}
