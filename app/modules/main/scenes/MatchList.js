@@ -40,8 +40,9 @@ class MatchList extends React.Component {
     componentWillReceiveProps(nextProps) {
         const { matches, user, myMatchs } = nextProps;
 
+
         this.setState({
-            matches: myMatchs ? Object.values(this.props.matches).filter(o => o.organizatorId === user.uid) : matches,
+            matches: myMatchs ? Object.values(matches).filter(o => o.organizatorId === user.uid) : matches,
         })
     }
 

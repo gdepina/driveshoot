@@ -27,6 +27,7 @@ class Match extends React.Component {
         this.checkIamIn = this.checkIamIn.bind(this);
         this.removePlayer = this.removePlayer.bind(this);
         this.iamOwner = this.iamOwner.bind(this);
+        this.renderListIcon = this.renderListIcon.bind(this);
     }
 
     componentDidMount() {
@@ -78,6 +79,22 @@ class Match extends React.Component {
         return displayName.substring(0, 2).toUpperCase();
     }
 
+    renderListIcon(player){
+        const remove = <Icon
+            name='remove'
+            type={"font-awesome"}
+            color='#f50'
+            onPress={() => this.props.removePlayerFromMatch(this.props.currentMatch.id, player.id)} />;
+        return player.owner ? this.renderStarIcon() : remove;
+    }
+
+    renderStarIcon() {
+        return <Icon
+            name='star'
+            type={"font-awesome"}
+            color='#ffc600' />;
+    }
+
     renderPlayers() {
         return (<Card title="Jugadores">
             {
@@ -86,14 +103,15 @@ class Match extends React.Component {
                         <FlatList
                             data={this.props.currentMatch && this.props.currentMatch.players !== undefined  ? this.props.currentMatch.players : []}
                             renderItem={(player) => (
-                                <ListItem
-                                    key={player.item.id}
-                                    hideChevron
-                                    avatar={"https://ui-avatars.com/api/?background=0D8ABC&color=fff&name="+this.getFirstCharacters(player.item)}
-                                    roundAvatar
-                                    title={player.item.displayName || player.item.email}
-                                    containerStyle={{borderBottomWidth: 0}}
-                                />
+                                    <ListItem
+                                        key={player.item.id}
+                                        avatar={"https://ui-avatars.com/api/?background=0D8ABC&color=fff&name="+this.getFirstCharacters(player.item)}
+                                        roundAvatar
+                                        title={player.item.displayName || player.item.email}
+                                        containerStyle={{borderBottomWidth: 0}}
+                                        chevronColor="#FFF"
+                                        rightIcon={(this.iamOwner() && this.renderListIcon(player.item)) || player.item.owner && this.renderStarIcon()}
+                                    />
                             )}
                             keyExtractor={item => item.id}
                         />

@@ -63,12 +63,12 @@ class MatchCreator extends React.Component {
 
     onShare() {
         Share.share({
-            message: '¿Sale doparti? - Sumate a goru entra aca -> http://bam.tech',
-            url: 'http://bam.tech',
+            message: '¿Sale doparti? - Sumate a goru entra aca -> https://bit.ly/2Ahks7E',
+            url: 'https://bit.ly/2Ahks7E',
             title: 'GORU - Suma, juga ya'
         }, {
             // Android only:
-            dialogTitle: 'Respira el futbol',
+            dialogTitle: `Partido de ${this.props.user.displayName || this.props.user.email}`,
         })
     }
 
